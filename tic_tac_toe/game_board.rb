@@ -21,6 +21,16 @@ class GameBoard
     display_space
   end
 
+  def remaining_indices
+    board.each_index.select { |ind| board[ind] == '-' }
+  end
+
+  def remaining_indices_count
+    remaining_indices.count
+  end
+
+  private
+
   def display_board
     p "  -------  "
     board.each_slice(3) { |slice| p " | #{slice.join(" ")} | " }
@@ -33,13 +43,5 @@ class GameBoard
 
   def display_space
     puts "\n"
-  end
-
-  def remaining_indices
-    board.each_index.select { |ind| board[ind] == '-' }
-  end
-
-  def remaining_indices_count
-    remaining_indices.count
   end
 end

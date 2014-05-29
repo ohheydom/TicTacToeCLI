@@ -1,7 +1,4 @@
 require_relative 'constants'
-require_relative 'computer_ai'
-require_relative 'game_board'
-require_relative 'check_winner'
 
 class TicTacToe
   attr_accessor :current_turn, :game_board
@@ -17,8 +14,10 @@ class TicTacToe
 
   def play
     p "Let's get started!"
-    display
+    puts "\n"
+    display_board
     while win? == false
+      p "Available moves: #{remaining_moves.join ', '}"
       p 'Make your move'
       if current_turn == X
         player_move = gets
@@ -26,7 +25,7 @@ class TicTacToe
       else
         move(computer_move)
       end
-      break if remaining_moves == 0
+      break if remaining_moves_count == 0
     end
     if win?
       p "Congratulations #{previous_turn}"
@@ -52,34 +51,38 @@ class TicTacToe
     game_board.board
   end
 
-  def move(location)
-    switch_turn if game_board.move(location, current_turn)
-    display
-  end
-
-  def win?(turn = previous_turn)
-    check_winner.new(board, turn).win?
+  def clear
+    game_board.board = Array.new(9, '-')
+    @current_turn = X
   end
 
   def computer_move
     computer_ai.new(game_board, O, check_winner).best_move
   end
 
-  def display
+  def display_board
     game_board.display(current_turn)
+  end
+
+  def move(location)
+    switch_turn if game_board.move(location, current_turn)
+    display_board
+  end
+
+  def remaining_moves_count
+    game_board.remaining_indices_count
+  end
+
+  def remaining_moves
+    game_board.remaining_indices
   end
 
   def previous_turn
     current_turn == X ? O : X
   end
 
-  def remaining_moves
-    game_board.remaining_indices_count
-  end
-
-  def clear
-    game_board.board = Array.new(9, '-')
-    @current_turn = X
+  def win?(turn = previous_turn)
+    check_winner.new(board, turn).win?
   end
 
   private
