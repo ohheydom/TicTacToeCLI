@@ -15,7 +15,7 @@ module CommandLineInterface
       if current_turn == X
         move_message
         player_move = gets.chomp
-        valid_input?(player_move) ? move(player_move.to_i) : invalid_input_message
+        valid_input?(player_move) ? move(player_move.to_i - 1) : invalid_input_message
       else
         move(computer_move)
       end
@@ -39,8 +39,12 @@ module CommandLineInterface
     puts "\nCurrent player: #{turn}\n"
   end
 
+  def remaining_moves_plus_one
+    remaining_moves.map { |num| num + 1 }
+  end
+
   def valid_input?(player_move)
-    remaining_moves.map(&:to_s).include?(player_move)
+    remaining_moves_plus_one.map(&:to_s).include?(player_move)
   end
 
   def check_win_message
@@ -52,7 +56,7 @@ module CommandLineInterface
   end
 
   def move_message
-    puts "\nAvailable moves: #{remaining_moves.join ', '}"
+    puts "\nAvailable moves: #{remaining_moves_plus_one.join ', '}"
     print "Make your move: "
   end
 
