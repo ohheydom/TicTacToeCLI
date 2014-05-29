@@ -27,13 +27,9 @@ class TicTacToe
     computer_ai.new(game_board, O, check_winner).best_move
   end
 
-  def display_board
-    game_board.display(current_turn)
-  end
-
   def move(location)
     switch_turn if game_board.move(location, current_turn)
-    display_board
+    board
   end
 
   def remaining_moves_count
