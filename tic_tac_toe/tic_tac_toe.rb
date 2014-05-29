@@ -1,50 +1,17 @@
 require_relative 'constants'
+require_relative 'command_line_interface'
 
 class TicTacToe
   attr_accessor :current_turn, :game_board
   attr_reader :check_winner, :computer_ai
   include Constants
+  include CommandLineInterface
 
   def initialize(game_board = GameBoard.new, check_winner = CheckWinner, computer_ai = ComputerAI)
     @game_board = game_board
     @check_winner = check_winner
     @computer_ai = computer_ai
     @current_turn = X
-  end
-
-  def play
-    p "Let's get started!"
-    puts "\n"
-    display_board
-    while win? == false
-      p "Available moves: #{remaining_moves.join ', '}"
-      p 'Make your move'
-      if current_turn == X
-        player_move = gets
-        move(player_move.to_i)
-      else
-        move(computer_move)
-      end
-      break if remaining_moves_count == 0
-    end
-    if win?
-      p "Congratulations #{previous_turn}"
-    else
-      p 'Draw!'
-    end
-    play_again
-  end
-
-  def play_again
-    p 'Play Again?'
-    answer = gets.chomp.downcase
-    if YES.include?(answer)
-      clear
-      play
-    else
-      clear
-      return
-    end
   end
 
   def board

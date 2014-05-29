@@ -1,5 +1,5 @@
 module Constants
   X = 'x'
   O = 'o'
-  YES = ['yes', 'y', 'si']
+  YES = %w(yes y si)
 end
