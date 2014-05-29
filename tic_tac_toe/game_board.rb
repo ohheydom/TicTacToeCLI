@@ -15,16 +15,24 @@ class GameBoard
   end
 
   def display(turn)
-    display_board
     display_turn(turn)
+    display_space
+    display_board
+    display_space
   end
 
   def display_board
-    board.each_slice(3) { |slice| p slice }
+    p "  -------  "
+    board.each_slice(3) { |slice| p " | #{slice.join(" ")} | " }
+    p "  -------  "
   end
   
   def display_turn(turn)
     p "Current player: #{turn}"
+  end
+
+  def display_space
+    puts "\n"
   end
 
   def remaining_indices

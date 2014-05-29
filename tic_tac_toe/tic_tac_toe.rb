@@ -3,7 +3,7 @@ require_relative 'computer_ai'
 require_relative 'game_board'
 require_relative 'check_winner'
 
-class TicTacToeGame
+class TicTacToe
   attr_accessor :current_turn, :game_board
   attr_reader :check_winner, :computer_ai
   include Constants
@@ -54,7 +54,7 @@ class TicTacToeGame
 
   def move(location)
     switch_turn if game_board.move(location, current_turn)
-    game_board.display(current_turn)
+    display
   end
 
   def win?(turn = previous_turn)
