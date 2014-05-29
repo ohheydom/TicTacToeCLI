@@ -15,6 +15,39 @@ class TicTacToeGame
     @current_turn = X
   end
 
+  def play
+    p "Let's get started!"
+    display
+    while win? == false
+      p 'Make your move'
+      if current_turn == X
+        player_move = gets
+        move(player_move.to_i)
+      else
+        move(computer_move)
+      end
+      break if remaining_moves == 0
+    end
+    if win?
+      p "Congratulations #{previous_turn}"
+    else
+      p 'Draw!'
+    end
+    play_again
+  end
+
+  def play_again
+    p 'Play Again?'
+    answer = gets.chomp.downcase
+    if YES.include?(answer)
+      clear
+      play
+    else
+      clear
+      return
+    end
+  end
+
   def board
     game_board.board
   end
