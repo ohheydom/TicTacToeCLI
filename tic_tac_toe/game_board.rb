@@ -14,6 +14,19 @@ class GameBoard
     end
   end
 
+  def display(turn)
+    display_board
+    display_turn(turn)
+  end
+
+  def display_board
+    board.each_slice(3) { |slice| p slice }
+  end
+  
+  def display_turn(turn)
+    p "Current player: #{turn}"
+  end
+
   def remaining_indices
     board.each_index.select { |ind| board[ind] == '-' }
   end

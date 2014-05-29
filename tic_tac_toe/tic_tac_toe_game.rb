@@ -1,4 +1,7 @@
 require_relative 'constants'
+require_relative 'computer_ai'
+require_relative 'game_board'
+require_relative 'check_winner'
 
 class TicTacToeGame
   attr_accessor :current_turn, :game_board
@@ -18,7 +21,7 @@ class TicTacToeGame
 
   def move(location)
     switch_turn if game_board.move(location, current_turn)
-    game_board.board
+    game_board.display(current_turn)
   end
 
   def win?(turn = previous_turn)
@@ -27,6 +30,10 @@ class TicTacToeGame
 
   def computer_move
     computer_ai.new(game_board, O, check_winner).best_move
+  end
+
+  def display
+    game_board.display(current_turn)
   end
 
   def previous_turn
