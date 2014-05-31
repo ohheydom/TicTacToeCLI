@@ -1,5 +1,6 @@
 require_relative 'constants'
 require_relative 'command_line_interface'
+require_relative 'minimax'
 
 class TicTacToe
   attr_accessor :current_turn, :game_board
@@ -23,8 +24,12 @@ class TicTacToe
     @current_turn = X
   end
 
+ #  def computer_move
+ #    computer_ai.new(game_board, O, check_winner).best_move
+ #  end
+
   def computer_move
-    computer_ai.new(game_board, O, check_winner).best_move
+    MiniMax.new(game_board.board.dup, check_winner).best_move
   end
 
   def move(location)
