@@ -13,40 +13,41 @@ class MiniMax
   end
 
   def move(location)
+    board[location] = current_turn
     switch_turn
   end
 
   def minimax(board, depth = 1)
     return score if check_winner.new(board, current_turn).win? || remaining_indices.empty?
     if current_turn == human
-      0
+      remaining_indices.map do |ind|
+        move(ind)
+        minimax(board, depth - 1) - depth
+      end.max
     else
-      0
+      remaining_indices.map do |ind|
+        move(ind)
+        minimax(board, depth - 1) + depth
+      end.min
     end
-    # best_val = 0
+  end
 
-    # if @player == 'o'
-    #   remaining_indices.each do |ind|
-    #     val = minimax(board, depth - 1)
-    #     if val > best_val
-    #       best_val = val
-    #       @choice = ind
-    #     else
-    #       best_val
-    #     end
-    #   end
-    # else
-    #   remaining_indices.each do |ind|
-    #     val = minimax(board, depth - 1)
-    #     if val < best_val
-    #       best_val = val
-    #       @choice = ind
-    #     else
-    #       best_val
-    #     end
-    #   end
-    # end
-    # best_val
+  def undo_move(location)
+    board[location] = '-'
+  end
+
+  def best_move
+    if current_turn == human
+      remaining_indices.max_by do |ind|
+        move ind
+        minimax(board)
+      end
+    else
+      remaining_indices.min_by do |ind|
+        move ind
+        minimax(board)
+      end
+    end
   end
 
   def computer
@@ -58,8 +59,8 @@ class MiniMax
   end
 
   def score
-    return 100 if check_winner.new(board, computer).win?
-    return -100 if check_winner.new(board, human).win?
+    return 100 if check_winner.new(board, human).win?
+    return -100 if check_winner.new(board, computer).win?
     return 0 if remaining_indices.empty?
   end
 
