@@ -1,80 +1,61 @@
 class MiniMax
-  attr_accessor :check_winner, :choice, :board
+  attr_reader :check_winner
+  attr_accessor :current_turn, :board
 
   def initialize(board, check_winner)
     @board = board
     @check_winner = check_winner
-    @player = 'o'
+    @current_turn = 'x'
   end
 
-  def max_score
-    scores = minimax(board)
-    puts scores
-    max_val = scores.values.max
-    scores.select { |key, val| val == max_val }
+  def switch_turn
+    @current_turn = @current_turn == 'x' ? 'o' : 'x'
   end
 
-  def best_move
-    minimax(board)
-    @choice
-  end
-
-  def other_player
-    @player = @player == 'x' ? 'o' : 'x'
-  end
-
-  def switch_player
-    @player = @player == 'x' ? 'o' : 'x'
+  def move(location)
+    switch_turn
   end
 
   def minimax(board, depth = 1)
-    return score(@player) if check_winner.new(board, @player).win? || depth == 0
-    best_val = 0
+    return score if check_winner.new(board, current_turn).win? #|| depth == 0
+    # best_val = 0
 
-    if @player == 'o'
-      remaining_indices.each do |ind|
-        move(ind, @player)
-        val = minimax(board, depth - 1)
-        if val > best_val
-          best_val = val
-          @choice = ind
-        else
-          best_val
-        end
-      end
-    else
-      remaining_indices.each do |ind|
-        move(ind, @player)
-        val = minimax(board, depth - 1)
-        if val < best_val
-          best_val = val
-          @choice = ind
-        else
-          best_val
-        end
-      end
-    end
-    best_val
+    # if @player == 'o'
+    #   remaining_indices.each do |ind|
+    #     val = minimax(board, depth - 1)
+    #     if val > best_val
+    #       best_val = val
+    #       @choice = ind
+    #     else
+    #       best_val
+    #     end
+    #   end
+    # else
+    #   remaining_indices.each do |ind|
+    #     val = minimax(board, depth - 1)
+    #     if val < best_val
+    #       best_val = val
+    #       @choice = ind
+    #     else
+    #       best_val
+    #     end
+    #   end
+    # end
+    # best_val
   end
 
-  def score(player)
-    return 100 if check_winner.new(board, @player).win?
-    return -100 if check_winner.new(board, other_player).win?
+  def computer
+    'o'
+  end
+
+  def human
+    'x'
+  end
+
+  def score
+    return 100 if check_winner.new(board, computer).win?
+    return -100 if check_winner.new(board, human).win?
     return 0 if remaining_indices.empty?
-  end
-
-  def undo_move(location)
-    board[location] = '-'
-  end
-
-  def move(location, turn)
-    if board[location] == '-'
-      board[location] = turn
-      location
-    else
-      nil
-    end
-    switch_player
   end
 
   def remaining_indices
