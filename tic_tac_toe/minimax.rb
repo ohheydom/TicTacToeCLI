@@ -17,7 +17,12 @@ class MiniMax
   end
 
   def minimax(board, depth = 1)
-    return score if check_winner.new(board, current_turn).win? #|| depth == 0
+    return score if check_winner.new(board, current_turn).win? || remaining_indices.empty?
+    if current_turn == human
+      0
+    else
+      0
+    end
     # best_val = 0
 
     # if @player == 'o'
@@ -60,9 +65,5 @@ class MiniMax
 
   def remaining_indices
     board.each_index.select { |ind| board[ind] == '-' }
-  end
-
-  def remaining_indices_count
-    remaining_indices.count
   end
 end

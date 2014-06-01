@@ -24,11 +24,11 @@ class TicTacToe
     @current_turn = X
   end
 
- #  def computer_move
- #    computer_ai.new(game_board, O, check_winner).best_move
- #  end
-
   def computer_move
+    computer_ai.new(game_board, O, check_winner).best_move
+  end
+
+  def minimax_computer_move
     MiniMax.new(game_board.board.dup, check_winner).best_move
   end
 

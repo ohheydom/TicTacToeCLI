@@ -21,6 +21,20 @@ describe MiniMax do
       minimax = MiniMax.new(board, check_winner)
       expect(minimax.minimax(board)).to eq(-100)
     end
+
+    it 'returns 0 if nobody wins' do
+      board = %w(x o x o x o o x o)
+      check_winner = CheckWinner
+      minimax = MiniMax.new(board, check_winner)
+      expect(minimax.minimax(board)).to eq(0)
+    end
+
+    it 'returns something if x can win' do
+      board = %w(x x - - - - - - -)
+      check_winner = CheckWinner
+      minimax = MiniMax.new(board, check_winner)
+      expect(minimax.minimax(board)).to eq(0)
+    end
   end
 
   describe '#best_move' do
