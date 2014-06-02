@@ -22,12 +22,12 @@ class MiniMax
     if current_turn == human
       remaining_indices.map do |ind|
         move(ind)
-        minimax(board, depth - 1) - depth
+        minimax(board, depth - 1) + depth
       end.max
     else
       remaining_indices.map do |ind|
         move(ind)
-        minimax(board, depth - 1) + depth
+        minimax(board, depth - 1) - depth
       end.min
     end
   end
@@ -40,12 +40,16 @@ class MiniMax
     if current_turn == human
       remaining_indices.max_by do |ind|
         move ind
-        minimax(board)
+        m = minimax(board)
+        undo_move(ind)
+        m
       end
     else
       remaining_indices.min_by do |ind|
         move ind
-        minimax(board)
+        m = minimax(board)
+        undo_move(ind)
+        m
       end
     end
   end
