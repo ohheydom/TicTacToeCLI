@@ -96,5 +96,15 @@ describe MiniMax do
       minimax.switch_turn
       expect(minimax.best_move).to eq(4)
     end
+
+    it 'o blocks the location of a winning move' do
+      board = %w(x - x
+                 - o x
+                 o - -)
+      check_winner = CheckWinner
+      minimax = MiniMax.new(board, check_winner)
+      minimax.switch_turn
+      expect(minimax.best_move).to eq(1)
+    end
   end
 end
