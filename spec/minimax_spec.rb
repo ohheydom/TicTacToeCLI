@@ -5,6 +5,28 @@ require_relative '../tic_tac_toe/tic_tac_toe'
 require_relative '../tic_tac_toe/computer_ai'
 
 describe MiniMax do
+  describe '#newmove' do
+    it 'returns a copy of the new board' do
+      board = %w(- - o - - - - - -)
+      check_winner = CheckWinner
+      minimax = MiniMax.new(board, check_winner)
+      minimax.new_move(0)
+      minimax.new_move(3)
+      minimax.new_move(4)
+      expect(minimax.new_move(5)).to eq(%w(x - o o x o - - -))
+    end
+
+    it 'does not change the origin board' do
+      board = %w(- - o - - - - - -)
+      check_winner = CheckWinner
+      minimax = MiniMax.new(board, check_winner)
+      minimax.new_move(0)
+      minimax.new_move(3)
+      minimax.new_move(4)
+      expect(minimax.board).to eq(%w(- - o - - - - - -))
+    end
+  end
+
   describe '#minimax' do
     it 'returns -100 if o wins' do
       board = %w(o o o - - - - - -)
@@ -29,14 +51,16 @@ describe MiniMax do
     end
 
     it 'returns 99 if x can win' do
-      board = %w(x x - - - - - - o)
+      board = %w(x o - x x - - o o)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
       expect(minimax.minimax(board)).to eq(99)
     end
 
     it 'returns -99 if o can win' do
-      board = %w(x x - o o x o x o)
+      board = %w(o o -
+                 - x - 
+                 x - x)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
       minimax.switch_turn
@@ -46,10 +70,12 @@ describe MiniMax do
 
   describe '#best_move' do
     it 'returns the location for a winning move for x' do
-      board = %w(- - x x x - - o o)
+      board = %w(- o x
+                 x x -
+                 - o o)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
-      expect(minimax.best_move).to eq(5)
+      expect(minimax.minimax(board)).to eq(5)
     end
 
     it 'returns the location for a winning move for x' do
