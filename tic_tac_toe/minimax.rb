@@ -19,6 +19,7 @@ class MiniMax
 
   def minimax(board, depth = 1)
     return score if check_winner.new(board, current_turn).win? || remaining_indices.empty?
+    best_move = nil
     max_or_min = nil
     remaining_indices.map do |ind|
       move(ind)
@@ -37,21 +38,6 @@ class MiniMax
       move ind
       minimax(board)
     end
-   #  if current_turn == human
-   #    remaining_indices.max_by do |ind|
-   #      move ind
-   #      m = minimax(board)
-   #      undo_move(ind)
-   #      m
-   #    end
-   #  else
-   #    remaining_indices.min_by do |ind|
-   #      move ind
-   #      m = minimax(board)
-   #      undo_move(ind)
-   #      m
-   #    end
-   #  end
   end
 
   def computer
