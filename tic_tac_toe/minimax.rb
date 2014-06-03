@@ -14,39 +14,53 @@ class MiniMax
   end
 
   def new_move(location)
-    x = @dup
-    x[location] = current_turn
-    switch_turn
-    x
+    @dup[location] = current_turn
+    @dup
   end
 
-  def win?(boarder)
-    check_winner.new(boarder, 'x').win? || check_winner.new(boarder, 'o').win?
+  def minimax(board, depth = 1)
+    return 100 if check_winner.new(@dup, human).win?
+    return -100 if check_winner.new(@dup, computer).win?
+    return 0 if remaining_indices.empty?
+
+    best_score = nil
+    if current_turn == human
+      best_score = -Float::INFINITY
+      remaining_indices.each do |move|
+        new_board = new_move(move)
+        score = minimax(new_board, depth + 1)
+        undo_move(move)
+        if score > best_score
+          best_score = score - depth
+          @best_move = move
+        end
+      end
+    else
+      best_score = Float::INFINITY
+      remaining_indices.each do |move|
+        new_board = new_move(move)
+        score = minimax(new_board, depth + 1)
+        undo_move(move)
+        if score < best_score
+          best_score = score + depth
+          @best_move = move
+        end
+      end
+    end
+    best_score
   end
 
-  def minimax(boarder, depth = 1)
-    return score(boarder) if win?(boarder) || remaining_indices(boarder).empty?
-    max_or_min = nil
-    depth_calc = current_turn == human ? -depth : depth
-    remaining_indices(boarder).map do |ind|
-      new_board = new_move(ind)
-      max_or_min = current_turn == human ? :max : :min
-      scorer = minimax(new_board, depth + 1) + depth_calc
-      undo_move(boarder, ind)
-      p "#{scorer}: #{ind}"
-      scorer
-    end.send(max_or_min)
+  def reset_board
+    @dup = board
   end
 
-  def undo_move(boarder, location)
-    boarder[location] = '-'
+  def undo_move(location)
+    @dup[location] = '-'
   end
 
   def best_move
-    @top_move
-    remaining_indices(board).min_by do |ind|
-      minimax(board)
-    end
+    minimax(board)
+    @best_move
   end
 
   def computer
@@ -57,13 +71,7 @@ class MiniMax
     'x'
   end
 
-  def score(boarder)
-    return 100 if check_winner.new(boarder, human).win?
-    return -100 if check_winner.new(boarder, computer).win?
-    return 0 if remaining_indices(boarder).empty?
-  end
-
-  def remaining_indices(boarder)
-    boarder.each_index.select { |ind| boarder[ind] == '-' }
+  def remaining_indices
+    @dup.each_index.select { |ind| @dup[ind] == '-' }
   end
 end

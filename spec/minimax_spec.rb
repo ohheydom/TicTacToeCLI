@@ -11,12 +11,15 @@ describe MiniMax do
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
       minimax.new_move(0)
+      minimax.switch_turn
       minimax.new_move(3)
+      minimax.switch_turn
       minimax.new_move(4)
+      minimax.switch_turn
       expect(minimax.new_move(5)).to eq(%w(x - o o x o - - -))
     end
 
-    it 'does not change the origin board' do
+    it 'does not change the original board' do
       board = %w(- - o - - - - - -)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
@@ -75,7 +78,7 @@ describe MiniMax do
                  - o o)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
-      expect(minimax.best_move).to eq(5)
+      expect(minimax.best_move).to eq(6)
     end
 
     it 'returns the location for a winning move for x' do
