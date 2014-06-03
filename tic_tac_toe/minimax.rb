@@ -26,47 +26,24 @@ class MiniMax
 
   def minimax(boarder, depth = 1)
     return score(boarder) if win?(boarder) || remaining_indices(boarder).empty?
-    top_move = nil
-    if current_turn == human
-      top_score = -Float::INFINITY
-    else
-      top_score = Float::INFINITY
-    end
-
+    max_or_min = nil
+    depth_calc = current_turn == human ? -depth : depth
     remaining_indices(boarder).map do |ind|
       new_board = new_move(ind)
-      depth_calc = current_turn == human ? -depth : depth
-      score = minimax(new_board, depth + 1) + depth_calc
-
-      if current_turn == human
-        if score > top_score
-          top_score = score
-          top_move = ind
-        end
-      else
-        if score < top_score
-          top_score = score
-          top_move = ind
-        end
-        99
-      end
-    end
-    p top_move
-    top_score
-   #  max_or_min = nil
-   #  remaining_indices.map do |ind|
-   #    move(ind)
-   #    max_or_min = current_turn == human ? :max : :min
-   #    depth_calc = current_turn == human ? depth : -depth
-   #    minimax(board, depth + 1) + depth_calc
-   #  end.send(max_or_min)
+      max_or_min = current_turn == human ? :max : :min
+      scorer = minimax(new_board, depth + 1) + depth_calc
+      undo_move(boarder, ind)
+      p "#{scorer}: #{ind}"
+      scorer
+    end.send(max_or_min)
   end
 
-  def undo_move(location)
-    board[location] = '-'
+  def undo_move(boarder, location)
+    boarder[location] = '-'
   end
 
   def best_move
+    @top_move
     remaining_indices(board).min_by do |ind|
       minimax(board)
     end
