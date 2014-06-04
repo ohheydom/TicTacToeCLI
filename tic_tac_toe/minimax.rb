@@ -24,27 +24,17 @@ class MiniMax
     return -100 if check_winner.new(@dup, computer).win?
     return 0 if remaining_indices.empty?
 
-    if current_turn == human
-      best_score = -Float::INFINITY
-      remaining_indices.each do |move|
-        new_board = new_move(move).dup
-        score = minimax(new_board, depth + 1) - depth
-        undo_move(move)
-        if score > best_score
-          best_score = score
-          @best_move = move
-        end
-      end
-    else
-      best_score = Float::INFINITY
-      remaining_indices.each do |move|
-        new_board = new_move(move).dup
-        score = minimax(new_board, depth + 1) + depth
-        undo_move(move)
-        if score < best_score
-          best_score = score
-          @best_move = move
-        end
+    best_score = current_turn == human ? -Float::INFINITY : Float::INFINITY
+    depth_value = current_turn == human ? -depth : depth
+    max_or_min = current_turn == human ? :max : :min
+
+    remaining_indices.each do |move|
+      new_board = new_move(move).dup
+      score = minimax(new_board, depth + 1) + depth_value
+      undo_move(move)
+      if [score, best_score].send(max_or_min) == score
+        best_score = score
+        @best_move = move
       end
     end
     best_score
@@ -66,7 +56,7 @@ class MiniMax
 
   def best_move
     min_or_max = current_turn == 'x' ? :max_by : :min_by
-    minimax_moves.send(min_or_max) {|a, b| a}[1]
+    minimax_moves.send(min_or_max) { |score, move| score }[1]
   end
 
   def computer

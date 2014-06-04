@@ -19,8 +19,7 @@ describe MiniMax do
       expect(minimax.new_move(5)).to eq(%w(o - o x o x - - -))
     end
 
-    it 'does not change the original board' do
-      board = %w(- - o - - - - - -)
+    it 'does not change the original board' do board = %w(- - o - - - - - -)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
       minimax.new_move(0)
@@ -62,7 +61,7 @@ describe MiniMax do
 
     it 'returns -99 if o can win' do
       board = %w(o o -
-                 - x - 
+                 - x -
                  x - x)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
@@ -84,7 +83,7 @@ describe MiniMax do
 
     it 'returns the location for a winning move for x' do
       board = %w(- - o
-                 - x - 
+                 - x -
                  - x o)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
@@ -94,7 +93,7 @@ describe MiniMax do
 
     it 'returns the location for a winning move for o' do
       board = %w(- - o
-                 - - - 
+                 - - -
                  x x o)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
@@ -122,7 +121,7 @@ describe MiniMax do
       expect(minimax.best_move).to eq(1)
     end
 
-    it 'o puts a mark in the the center if a corner is played' do
+    it 'o puts a mark in the center if a corner is played' do
       board = %w(x - -
                  - - -
                  - - -)
@@ -130,6 +129,26 @@ describe MiniMax do
       minimax = MiniMax.new(board, check_winner)
       minimax.current_turn = 'o'
       expect(minimax.best_move).to eq(4)
+    end
+
+    it 'o puts a mark in the corner if the center is played' do
+      board = %w(- - -
+                 - x -
+                 - - -)
+      check_winner = CheckWinner
+      minimax = MiniMax.new(board, check_winner)
+      minimax.current_turn = 'o'
+      expect(minimax.best_move).to eq(0)
+    end
+
+    it 'o puts a mark in an adjacent corner if a side is played' do
+      board = %w(- - -
+                 x - -
+                 - - -)
+      check_winner = CheckWinner
+      minimax = MiniMax.new(board, check_winner)
+      minimax.current_turn = 'o'
+      expect(minimax.best_move).to eq(0)
     end
   end
 end
