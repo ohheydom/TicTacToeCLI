@@ -1,5 +1,5 @@
-require_relative 'command_line_interface'
-Dir[File.join(__dir__, 'algorithms', '*.rb')].each { |file| require_relative file }
+Dir[File.join(__dir__, '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'algorithms', '*.rb')].each { |file| require file }
 
 class TicTacToe
   attr_accessor :current_turn, :game_board
