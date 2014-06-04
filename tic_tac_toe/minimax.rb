@@ -20,9 +20,7 @@ class MiniMax
 
   def minimax(board, depth = 1)
     switch_turn
-    return 100 if check_winner.new(@dup, human).win?
-    return -100 if check_winner.new(@dup, computer).win?
-    return 0 if remaining_indices.empty?
+    return score if game_over?
 
     best_score = current_turn == human ? -Float::INFINITY : Float::INFINITY
     depth_value = current_turn == human ? -depth : depth
@@ -69,5 +67,19 @@ class MiniMax
 
   def remaining_indices
     @dup.each_index.select { |ind| @dup[ind] == '-' }
+  end
+
+  private
+
+  def game_over?
+    check_winner.new(@dup, human).win? ||
+    check_winner.new(@dup, computer).win? ||
+    remaining_indices.empty?
+  end
+
+  def score
+    return 100 if check_winner.new(@dup, human).win?
+    return -100 if check_winner.new(@dup, computer).win?
+    return 0 if remaining_indices.empty?
   end
 end

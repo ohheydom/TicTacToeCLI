@@ -19,7 +19,8 @@ describe MiniMax do
       expect(minimax.new_move(5)).to eq(%w(o - o x o x - - -))
     end
 
-    it 'does not change the original board' do board = %w(- - o - - - - - -)
+    it 'does not change the original board' do
+      board = %w(- - o - - - - - -)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
       minimax.new_move(0)
