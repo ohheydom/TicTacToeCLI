@@ -1,5 +1,5 @@
 require_relative 'command_line_interface'
-require_relative 'minimax'
+Dir[File.join(__dir__, 'algorithms', '*.rb')].each { |file| require_relative file }
 
 class TicTacToe
   attr_accessor :current_turn, :game_board

@@ -1,6 +1,6 @@
 require_relative 'forks'
 
-class ComputerAI
+class ElseMethod
   include Forks
   attr_reader :game_board, :turn, :check_winner, :old_board
   CORNERS = [0, 2, 6, 8]

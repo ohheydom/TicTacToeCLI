@@ -1,8 +1,7 @@
-require_relative '../tic_tac_toe/minimax'
+require_relative '../tic_tac_toe/algorithms/minimax'
 require_relative '../tic_tac_toe/game_board'
 require_relative '../tic_tac_toe/check_winner'
 require_relative '../tic_tac_toe/tic_tac_toe'
-require_relative '../tic_tac_toe/computer_ai'
 
 describe MiniMax do
   describe '#newmove' do
