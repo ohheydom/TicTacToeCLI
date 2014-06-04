@@ -1,5 +1,7 @@
 module CommandLineInterface
-  include Constants
+  X = 'x'
+  O = 'o'
+  YES = %w(yes y si)
 
   def play
     start_message

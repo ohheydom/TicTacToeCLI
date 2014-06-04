@@ -1,12 +1,12 @@
-require_relative 'constants'
 require_relative 'command_line_interface'
 require_relative 'minimax'
 
 class TicTacToe
   attr_accessor :current_turn, :game_board
   attr_reader :check_winner, :computer_ai
-  include Constants
   include CommandLineInterface
+  X = 'x'
+  O = 'o'
 
   def initialize(game_board = GameBoard.new, check_winner = CheckWinner, computer_ai = ComputerAI)
     @game_board = game_board
