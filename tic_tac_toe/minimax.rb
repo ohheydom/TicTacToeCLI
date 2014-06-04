@@ -1,16 +1,19 @@
 class MiniMax
-  attr_reader :check_winner
+  attr_reader :check_winner, :computer_player
   attr_accessor :current_turn, :board
+  O = 'o'
+  X = 'x'
 
-  def initialize(board, check_winner)
-    @board = board
+  def initialize(game_board, computer_player, check_winner)
+    @board = game_board.board
     @dup = board.dup
     @check_winner = check_winner
-    @current_turn = 'o'
+    @current_turn = computer_player
+    @computer_player = computer_player
   end
 
   def switch_turn
-    @current_turn = @current_turn == 'x' ? 'o' : 'x'
+    @current_turn = current_turn == X ? O : X
   end
 
   def new_move(location)
@@ -18,17 +21,16 @@ class MiniMax
     @dup
   end
 
-  def minimax(board, depth = 1)
+  def minimax(board, depth = 0)
     switch_turn
-    return score if game_over?
+    return score(depth) if game_over?
 
-    best_score = current_turn == human ? -Float::INFINITY : Float::INFINITY
-    depth_value = current_turn == human ? -depth : depth
-    max_or_min = current_turn == human ? :max : :min
+    best_score = current_turn == human_player ? -Float::INFINITY : Float::INFINITY
+    max_or_min = current_turn == human_player ? :max : :min
 
     remaining_indices.each do |move|
       new_board = new_move(move).dup
-      score = minimax(new_board, depth + 1) + depth_value
+      score = minimax(new_board, depth + 1)
       undo_move(move)
       if [score, best_score].send(max_or_min) == score
         best_score = score
@@ -53,33 +55,29 @@ class MiniMax
   end
 
   def best_move
-    min_or_max = current_turn == 'x' ? :max_by : :min_by
+    min_or_max = current_turn == human_player ? :max_by : :min_by
     minimax_moves.send(min_or_max) { |score, move| score }[1]
-  end
-
-  def computer
-    'o'
-  end
-
-  def human
-    'x'
-  end
-
-  def remaining_indices
-    @dup.each_index.select { |ind| @dup[ind] == '-' }
   end
 
   private
 
   def game_over?
-    check_winner.new(@dup, human).win? ||
-    check_winner.new(@dup, computer).win? ||
+    check_winner.new(@dup, human_player).win? ||
+    check_winner.new(@dup, computer_player).win? ||
     remaining_indices.empty?
   end
 
-  def score
-    return 100 if check_winner.new(@dup, human).win?
-    return -100 if check_winner.new(@dup, computer).win?
+  def score(depth)
+    return (100-depth) if check_winner.new(@dup, human_player).win?
+    return (-100+depth) if check_winner.new(@dup, computer_player).win?
     return 0 if remaining_indices.empty?
+  end
+
+  def human_player
+    computer_player == O ? X : O
+  end
+
+  def remaining_indices
+    @dup.each_index.select { |ind| @dup[ind] == '-' }
   end
 end

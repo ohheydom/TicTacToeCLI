@@ -3,15 +3,15 @@ require_relative 'minimax'
 
 class TicTacToe
   attr_accessor :current_turn, :game_board
-  attr_reader :check_winner, :computer_ai
+  attr_reader :check_winner, :computer_algorithm
   include CommandLineInterface
   X = 'x'
   O = 'o'
 
-  def initialize(game_board = GameBoard.new, check_winner = CheckWinner, computer_ai = ComputerAI)
+  def initialize(game_board = GameBoard.new, check_winner = CheckWinner, computer_algorithm = MiniMax)
     @game_board = game_board
     @check_winner = check_winner
-    @computer_ai = computer_ai
+    @computer_algorithm = computer_algorithm
     @current_turn = X
   end
 
@@ -25,11 +25,7 @@ class TicTacToe
   end
 
   def computer_move
-    computer_ai.new(game_board, O, check_winner).best_move
-  end
-
-  def minimax_computer_move
-    MiniMax.new(game_board.board.dup, check_winner).best_move
+    computer_algorithm.new(game_board, O, check_winner).best_move
   end
 
   def move(location)

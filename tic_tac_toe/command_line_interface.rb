@@ -19,7 +19,7 @@ module CommandLineInterface
         player_move = gets.chomp
         valid_input?(player_move) ? move(player_move.to_i - 1) : invalid_input_message
       else
-        move(minimax_computer_move)
+        move(computer_move)
       end
       display_turn_and_board
       break if remaining_moves_count == 0
