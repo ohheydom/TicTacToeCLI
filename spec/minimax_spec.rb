@@ -16,7 +16,7 @@ describe MiniMax do
       minimax.switch_turn
       minimax.new_move(4)
       minimax.switch_turn
-      expect(minimax.new_move(5)).to eq(%w(x - o o x o - - -))
+      expect(minimax.new_move(5)).to eq(%w(o - o x o x - - -))
     end
 
     it 'does not change the original board' do
@@ -78,6 +78,7 @@ describe MiniMax do
                  o o -)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
+      minimax.current_turn = 'x'
       expect(minimax.best_move).to eq(5)
     end
 
@@ -87,6 +88,7 @@ describe MiniMax do
                  - x o)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
+      minimax.current_turn = 'x'
       expect(minimax.best_move).to eq(1)
     end
 
@@ -106,7 +108,7 @@ describe MiniMax do
                  o - -)
       check_winner = CheckWinner
       minimax = MiniMax.new(board, check_winner)
-      minimax.switch_turn
+      minimax.current_turn = 'o'
       expect(minimax.best_move).to eq(4)
     end
 

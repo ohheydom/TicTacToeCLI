@@ -6,7 +6,7 @@ class MiniMax
     @board = board
     @dup = board.dup
     @check_winner = check_winner
-    @current_turn = 'x'
+    @current_turn = 'o'
   end
 
   def switch_turn
@@ -56,7 +56,6 @@ class MiniMax
   end
 
   def minimax_moves
-    switch_turn if current_turn == 'x'
     remaining_indices.map do |move|
       new_move(move)
       score = [minimax(board), move]
@@ -66,8 +65,8 @@ class MiniMax
   end
 
   def best_move
-    #min_or_max = current_turn == 'x' ? :max_by : :min_by
-    minimax_moves.send(:min_by) {|a, b| a}[1]
+    min_or_max = current_turn == 'x' ? :max_by : :min_by
+    minimax_moves.send(min_or_max) {|a, b| a}[1]
   end
 
   def computer
