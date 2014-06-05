@@ -8,10 +8,11 @@ class TicTacToe
   X = 'x'
   O = 'o'
 
-  def initialize(game_board = GameBoard.new, check_winner = CheckWinner, computer_algorithm = MiniMax)
-    @game_board = game_board
-    @check_winner = check_winner
-    @computer_algorithm = computer_algorithm
+  def initialize(args = {})
+    args = defaults.merge(args)
+    @game_board = args[:game_board]
+    @check_winner = args[:check_winner]
+    @computer_algorithm = args[:computer_algorithm]
     @current_turn = X
   end
 
@@ -53,5 +54,11 @@ class TicTacToe
 
   def switch_turn
     @current_turn = current_turn == X ? O : X
+  end
+
+  def defaults
+    { :game_board => GameBoard.new,
+      :check_winner => CheckWinner,
+      :computer_algorithm => MiniMax }
   end
 end
