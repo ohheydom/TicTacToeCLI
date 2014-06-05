@@ -68,8 +68,8 @@ class MiniMax
   end
 
   def score(depth)
-    return (100-depth) if check_winner.new(@dup, human_player).win?
-    return (-100+depth) if check_winner.new(@dup, computer_player).win?
+    return (100 - depth) if check_winner.new(@dup, human_player).win?
+    return (-100 + depth) if check_winner.new(@dup, computer_player).win?
     return 0 if remaining_indices.empty?
   end
 
