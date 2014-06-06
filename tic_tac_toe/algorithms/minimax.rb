@@ -29,7 +29,7 @@ class MiniMax
     max_or_min = current_turn == human_player ? :max : :min
 
     remaining_indices.each do |move|
-      new_board = new_move(move).dup
+      new_board = new_move(move)
       score = minimax(new_board, depth + 1)
       undo_move(move)
       switch_turn
@@ -70,7 +70,7 @@ class MiniMax
 
   def score(depth)
     return (100 - depth) if check_winner.new(@dup, human_player).win?
-    return (-100 + depth) if check_winner.new(@dup, computer_player).win?
+    return (depth - 100) if check_winner.new(@dup, computer_player).win?
     return 0 if remaining_indices.empty?
   end
 
