@@ -3,7 +3,7 @@ class CommandLineInterface
   X = 'x'
   O = 'o'
   YES = %w(yes y si)
-  
+
   def initialize(game)
     @game = game
   end

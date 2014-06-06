@@ -32,6 +32,7 @@ class MiniMax
       new_board = new_move(move).dup
       score = minimax(new_board, depth + 1)
       undo_move(move)
+      switch_turn
       if [score, best_score].send(max_or_min) == score
         best_score = score
         @best_move = move
@@ -42,7 +43,6 @@ class MiniMax
 
   def undo_move(location)
     @dup[location] = '-'
-    switch_turn
   end
 
   def minimax_moves
@@ -50,6 +50,7 @@ class MiniMax
       new_move(move)
       score = [minimax(board), move]
       undo_move(move)
+      switch_turn
       score
     end
   end
