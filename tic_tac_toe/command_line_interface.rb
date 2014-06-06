@@ -1,7 +1,12 @@
-module CommandLineInterface
+class CommandLineInterface
+  attr_reader :game
   X = 'x'
   O = 'o'
   YES = %w(yes y si)
+  
+  def initialize(game)
+    @game = game
+  end
 
   def play
     start_message
@@ -13,22 +18,22 @@ module CommandLineInterface
   private
 
   def loop_through_moves
-    while win? == false
-      if current_turn == X
+    while game.win? == false
+      if game.current_turn == X
         move_message
         player_move = gets.chomp
-        valid_input?(player_move) ? move(player_move.to_i - 1) : invalid_input_message
+        valid_input?(player_move) ? game.move(player_move.to_i - 1) : invalid_input_message
       else
-        move(computer_move)
+        game.move(game.computer_move)
       end
       display_turn_and_board
-      break if remaining_moves_count == 0
+      break if game.remaining_moves_count == 0
     end
   end
 
   def display_turn_and_board
-    display_turn(current_turn)
-    display_board(board)
+    display_turn(game.current_turn)
+    display_board(game.board)
   end
 
   def display_board(board)
@@ -42,7 +47,7 @@ module CommandLineInterface
   end
 
   def remaining_moves_plus_one
-    remaining_moves.map { |num| num + 1 }
+    game.remaining_moves.map { |num| num + 1 }
   end
 
   def valid_input?(player_move)
@@ -50,7 +55,7 @@ module CommandLineInterface
   end
 
   def check_win_message
-    p win? ? "Congratulations #{previous_turn}!" : 'Draw!'
+    p game.win? ? "Congratulations #{game.previous_turn}!" : 'Draw!'
   end
 
   def invalid_input_message
@@ -63,7 +68,7 @@ module CommandLineInterface
   end
 
   def play_again_message
-    clear
+    game.clear
     print 'Play Again? '
     answer = gets.chomp.downcase
     YES.include?(answer) ? play : return
@@ -71,6 +76,6 @@ module CommandLineInterface
 
   def start_message
     puts "\nLet's get started!\n\n"
-    display_board(board)
+    display_board(game.board)
   end
 end

@@ -3,8 +3,7 @@ Dir[File.join(__dir__, 'algorithms', '*.rb')].each { |file| require file }
 
 class TicTacToe
   attr_accessor :current_turn, :game_board
-  attr_reader :check_winner, :computer_algorithm
-  include CommandLineInterface
+  attr_reader :check_winner, :computer_algorithm, :interface
   X = 'x'
   O = 'o'
 
@@ -13,6 +12,7 @@ class TicTacToe
     @game_board = args[:game_board]
     @check_winner = args[:check_winner]
     @computer_algorithm = args[:computer_algorithm]
+    @interface = args[:interface]
     @current_turn = X
   end
 
@@ -50,6 +50,10 @@ class TicTacToe
     check_winner.new(board, turn).win?
   end
 
+  def play
+    interface.play
+  end
+
   private
 
   def switch_turn
@@ -59,6 +63,7 @@ class TicTacToe
   def defaults
     { :game_board => GameBoard.new,
       :check_winner => CheckWinner,
-      :computer_algorithm => MiniMax }
+      :computer_algorithm => MiniMax,
+      :interface => CommandLineInterface.new(self) }
   end
 end
