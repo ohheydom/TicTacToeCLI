@@ -61,9 +61,9 @@ class TicTacToe
   end
 
   def defaults
-    { :game_board => GameBoard.new,
-      :check_winner => CheckWinner,
-      :computer_algorithm => MiniMax,
-      :interface => CommandLineInterface.new(self) }
+    { game_board: GameBoard.new,
+      check_winner: CheckWinner,
+      computer_algorithm: MiniMax,
+      interface: CommandLineInterface.new(self) }
   end
 end
