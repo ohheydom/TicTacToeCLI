@@ -21,3 +21,11 @@ The numbers 1 through 9 correspond to each individual square. Like so:
 ```
 
 The game will ask for your move. Simply enter the number that corresponds to the square you wish to mark. The available moves are listed at the bottom.
+
+## Algorithms
+
+The computer can utilize two algorithms to select a move. The default is MiniMax, the other is called the ElseMethod. In order to pass in a different algorithm, edit the play.rb file like so:
+
+```
+TicTacToe.new(computer_algorithm: ElseMethod).play
+```
