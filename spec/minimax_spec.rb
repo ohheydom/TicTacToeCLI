@@ -32,8 +32,11 @@ describe MiniMax do
   end
 
   describe '#minimax' do
-    it 'returns -100 if o wins' do
-      board = %w(o o o - - - - - -)
+    pending it 'returns -100 if o wins' do
+      board = %w(o - o -
+                 x - o x
+                 - - - x
+                 - x - o)
       game_board = double('GameBoard', board: board)
       check_winner = CheckWinner
       minimax = MiniMax.new(game_board, 'o', check_winner)

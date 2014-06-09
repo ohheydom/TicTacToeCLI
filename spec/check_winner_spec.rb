@@ -70,7 +70,7 @@ describe CheckWinner do
       end
     end
   end
-  
+
   describe '4X4 board' do
     describe 'horizontal_win?' do
       it 'returns true when player o wins horizontally' do

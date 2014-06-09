@@ -37,8 +37,9 @@ class CommandLineInterface
   end
 
   def display_board(board)
+    dimension = Math.sqrt(board.size)
     puts "\n   -------  "
-    board.each_slice(3) { |slice| p " | #{slice.join(" ")} | " }
+    board.each_slice(dimension) { |slice| p " | #{slice.join(" ")} | " }
     puts "   -------  \n"
   end
 
