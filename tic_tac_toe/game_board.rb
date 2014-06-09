@@ -1,8 +1,8 @@
 class GameBoard
   attr_accessor :board
 
-  def initialize
-    @board = Array.new(9, '-')
+  def initialize(size = 3)
+    @board = Array.new(size**2, '-')
   end
 
   def move(location, turn)

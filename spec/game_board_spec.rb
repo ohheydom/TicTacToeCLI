@@ -2,8 +2,8 @@ require_relative '../tic_tac_toe/game_board'
 
 describe GameBoard do
   describe '#new' do
-    it 'instantiates an array of 9 dashes' do
-      expect(GameBoard.new.board).to eq(Array.new(9, '-'))
+    it 'instantiates an array of dimensions^2 dashes' do
+      expect(GameBoard.new(3).board).to eq(Array.new(9, '-'))
     end
   end
 

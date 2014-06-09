@@ -2,7 +2,8 @@ class CheckWinner
   attr_reader :turn, :board
 
   def initialize(board, turn)
-    @board = board.each_slice(3).to_a
+    @dimension = Math.sqrt(board.size)
+    @board = board.each_slice(@dimension).to_a
     @turn = turn
   end
 
@@ -22,6 +23,6 @@ class CheckWinner
 
   def diagonal_win?
     board.map.with_index.all? { |row, ind| row[ind] == turn } ||
-    board.map.with_index.all? { |row, ind| row[2 - ind] == turn }
+    board.map.with_index.all? { |row, ind| row[@dimension - 1 - ind] == turn }
   end
 end
