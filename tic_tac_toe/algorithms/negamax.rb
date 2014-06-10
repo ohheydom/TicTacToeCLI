@@ -1,0 +1,3 @@
+class Negamax
+
+end
