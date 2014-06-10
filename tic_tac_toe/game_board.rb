@@ -25,11 +25,11 @@ class GameBoard
   end
 
   def new_board
-    board = create_board(size)
+    create_board(size)
   end
 
   private
-  
+
   def create_board(size)
     Array.new(size**2, '-')
   end

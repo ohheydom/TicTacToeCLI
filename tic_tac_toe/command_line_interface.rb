@@ -65,7 +65,7 @@ class CommandLineInterface
 
   def move_message
     puts "\nAvailable moves: #{remaining_moves_plus_one.join ', '}"
-    print "Make your move: "
+    print 'Make your move: '
   end
 
   def play_again_message
