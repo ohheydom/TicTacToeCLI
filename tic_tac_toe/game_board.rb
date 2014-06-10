@@ -1,8 +1,10 @@
 class GameBoard
   attr_accessor :board
+  attr_reader :size
 
   def initialize(size = 3)
-    @board = Array.new(size**2, '-')
+    @size = size
+    @board = create_board(size)
   end
 
   def move(location, turn)
@@ -20,5 +22,15 @@ class GameBoard
 
   def remaining_indices_count
     remaining_indices.count
+  end
+
+  def new_board
+    board = create_board(size)
+  end
+
+  private
+  
+  def create_board(size)
+    Array.new(size**2, '-')
   end
 end

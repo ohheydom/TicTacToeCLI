@@ -21,7 +21,7 @@ class TicTacToe
   end
 
   def clear
-    game_board.board = Array.new(9, '-')
+    game_board.board = game_board.new_board
     @current_turn = X
   end
 
