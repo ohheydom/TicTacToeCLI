@@ -12,8 +12,8 @@ class MiniMax
     @computer_player = computer_player
   end
 
-  def switch_turn
-    @current_turn = current_turn == X ? O : X
+  def best_move
+    minimax_moves.send(xturn(:max_by, :min_by)) { |score, move| score }[1]
   end
 
   def new_move(location)
@@ -37,8 +37,24 @@ class MiniMax
     best_score
   end
 
+  def switch_turn
+    @current_turn = current_turn == X ? O : X
+  end
+
   def undo_move(location)
     @dup[location] = '-'
+  end
+
+  private
+
+  def game_over?
+    check_winner.new(@dup, human_player).win? ||
+    check_winner.new(@dup, computer_player).win? ||
+    remaining_indices.empty?
+  end
+
+  def human_player
+    computer_player == O ? X : O
   end
 
   def minimax_moves
@@ -51,30 +67,14 @@ class MiniMax
     end
   end
 
-  def best_move
-    minimax_moves.send(xturn(:max_by, :min_by)) { |score, move| score }[1]
-  end
-
-  private
-
-  def game_over?
-    check_winner.new(@dup, human_player).win? ||
-    check_winner.new(@dup, computer_player).win? ||
-    remaining_indices.empty?
+  def remaining_indices
+    @dup.each_index.select { |ind| @dup[ind] == '-' }
   end
 
   def score(depth)
     return (100 - depth) if check_winner.new(@dup, human_player).win?
     return (depth - 100) if check_winner.new(@dup, computer_player).win?
     return 0 if remaining_indices.empty?
-  end
-
-  def human_player
-    computer_player == O ? X : O
-  end
-
-  def remaining_indices
-    @dup.each_index.select { |ind| @dup[ind] == '-' }
   end
 
   def xturn(value_x, value_o)
