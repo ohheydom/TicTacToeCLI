@@ -30,11 +30,8 @@ class MiniMax
       score = minimax_alpha_beta(new_board, depth + 1, alpha, beta)
       undo_move(move)
       switch_turn
-      if current_turn == human_player
-        alpha = score if score > alpha
-      else
-        beta = score if score < beta
-      end
+      alpha = score if score > alpha && current_turn == human_player
+      beta = score if score < beta && current_turn == computer_player
       return xturn(alpha, beta) if alpha >= beta
     end
     xturn(alpha, beta)
