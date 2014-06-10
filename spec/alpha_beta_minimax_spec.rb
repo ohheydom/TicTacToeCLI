@@ -1,4 +1,5 @@
 require_relative '../tic_tac_toe/algorithms/alpha_beta_minimax'
+require_relative '../tic_tac_toe/check_winner'
 
 describe AlphaBetaMinimax do
   describe '#alpha_beta_minimax' do
