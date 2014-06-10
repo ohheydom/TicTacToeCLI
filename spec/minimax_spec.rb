@@ -71,9 +71,9 @@ describe MiniMax do
   describe '#minimax_alpha_beta' do
     it 'returns -99 if o can win' do
       board = %w(o - x -
-                 - o x -
-                 - x - -
-                 - x o o)
+                 - o - -
+                 - x - o
+                 - x x o)
       game_board = double('GameBoard', board: board)
       check_winner = CheckWinner
       minimax = MiniMax.new(game_board, 'o', check_winner)

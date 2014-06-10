@@ -25,50 +25,34 @@ class MiniMax
     switch_turn
     return score(depth) if game_over?
 
-    if current_turn == human_player
-      remaining_indices.each do |move|
-        new_board = new_move(move).dup
-        score = minimax_alpha_beta(new_board, depth + 1, alpha, beta) + depth
-        undo_move(move)
-        switch_turn
-        if score > alpha
-          @best_move = move
-          alpha = score
-        end
-        return alpha if alpha >= beta
+    remaining_indices.each do |move|
+      new_board = new_move(move).dup
+      score = minimax_alpha_beta(new_board, depth + 1, alpha, beta)
+      undo_move(move)
+      switch_turn
+      if current_turn == human_player
+        alpha = score if score > alpha
+      else
+        beta = score if score < beta
       end
-      alpha
-    else
-      remaining_indices.each do |move|
-        new_board = new_move(move).dup
-        score = minimax_alpha_beta(new_board, depth + 1, alpha, beta) - depth
-        undo_move(move)
-        switch_turn
-        if score < beta
-          @best_move = move
-          beta = score
-        end
-        return beta if alpha >= beta
-      end
-      beta
+      return xturn(alpha, beta) if alpha >= beta
     end
+    xturn(alpha, beta)
   end
 
   def minimax(board, depth = 0)
     switch_turn
     return score(depth) if game_over?
 
-    best_score = current_turn == human_player ? -Float::INFINITY : Float::INFINITY
-    max_or_min = current_turn == human_player ? :max : :min
+    best_score = xturn(-Float::INFINITY, Float::INFINITY)
 
     remaining_indices.each do |move|
       new_board = new_move(move)
       score = minimax(new_board, depth + 1)
       undo_move(move)
       switch_turn
-      if [score, best_score].send(max_or_min) == score
+      if [score, best_score].send(xturn(:max, :min)) == score
         best_score = score
-        @best_move = move
       end
     end
     best_score
@@ -81,7 +65,7 @@ class MiniMax
   def minimax_moves
     remaining_indices.map do |move|
       new_move(move)
-      score = [minimax(board), move]
+      score = [minimax_alpha_beta(board), move]
       undo_move(move)
       switch_turn
       score
@@ -113,5 +97,9 @@ class MiniMax
 
   def remaining_indices
     @dup.each_index.select { |ind| @dup[ind] == '-' }
+  end
+
+  def xturn(value_x, value_o)
+    current_turn == human_player ? value_x : value_o
   end
 end
