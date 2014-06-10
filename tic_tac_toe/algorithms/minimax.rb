@@ -51,9 +51,7 @@ class MiniMax
       score = minimax(new_board, depth + 1)
       undo_move(move)
       switch_turn
-      if [score, best_score].send(xturn(:max, :min)) == score
-        best_score = score
-      end
+      best_score = score if [score, best_score].send(xturn(:max, :min)) == score
     end
     best_score
   end
@@ -73,8 +71,7 @@ class MiniMax
   end
 
   def best_move
-    min_or_max = current_turn == human_player ? :max_by : :min_by
-    minimax_moves.send(min_or_max) { |score, move| score }[1]
+    minimax_moves.send(xturn(:max_by, :min_by)) { |score, move| score }[1]
   end
 
   private
