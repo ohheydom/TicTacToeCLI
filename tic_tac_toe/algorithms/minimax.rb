@@ -21,6 +21,39 @@ class MiniMax
     @dup
   end
 
+  def minimax_alpha_beta(board, depth = 0, alpha = -Float::INFINITY, beta = Float::INFINITY)
+    switch_turn
+    return score(depth) if game_over?
+
+    if current_turn == human_player
+      remaining_indices.each do |move|
+        new_board = new_move(move).dup
+        score = minimax_alpha_beta(new_board, depth + 1, alpha, beta) + depth
+        undo_move(move)
+        switch_turn
+        if score > alpha
+          @best_move = move
+          alpha = score
+        end
+        return alpha if alpha >= beta
+      end
+      alpha
+    else
+      remaining_indices.each do |move|
+        new_board = new_move(move).dup
+        score = minimax_alpha_beta(new_board, depth + 1, alpha, beta) - depth
+        undo_move(move)
+        switch_turn
+        if score < beta
+          @best_move = move
+          beta = score
+        end
+        return beta if alpha >= beta
+      end
+      beta
+    end
+  end
+
   def minimax(board, depth = 0)
     switch_turn
     return score(depth) if game_over?

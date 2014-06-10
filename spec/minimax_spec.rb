@@ -32,18 +32,6 @@ describe MiniMax do
   end
 
   describe '#minimax' do
-    pending it 'returns -100 if o wins' do
-      board = %w(o - o -
-                 x - o x
-                 - - - x
-                 - x - o)
-      game_board = double('GameBoard', board: board)
-      check_winner = CheckWinner
-      minimax = MiniMax.new(game_board, 'o', check_winner)
-      minimax.switch_turn
-      expect(minimax.minimax(board)).to eq(-100)
-    end
-
     it 'returns 100 if x wins' do
       board = %w(x x x - - - - - -)
       game_board = double('GameBoard', board: board)
@@ -77,6 +65,20 @@ describe MiniMax do
       minimax = MiniMax.new(game_board, 'o', check_winner)
       minimax.switch_turn
       expect(minimax.minimax(board)).to eq(-99)
+    end
+  end
+
+  describe '#minimax_alpha_beta' do
+    it 'returns -99 if o can win' do
+      board = %w(o - x -
+                 - o x -
+                 - x - -
+                 - x o o)
+      game_board = double('GameBoard', board: board)
+      check_winner = CheckWinner
+      minimax = MiniMax.new(game_board, 'o', check_winner)
+      minimax.switch_turn
+      expect(minimax.minimax_alpha_beta(board)).to eq(-99)
     end
   end
 
