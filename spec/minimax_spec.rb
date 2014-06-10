@@ -68,20 +68,6 @@ describe MiniMax do
     end
   end
 
-  describe '#minimax_alpha_beta' do
-    it 'returns -99 if o can win' do
-      board = %w(o - x -
-                 - o - -
-                 - x - o
-                 - x x o)
-      game_board = double('GameBoard', board: board)
-      check_winner = CheckWinner
-      minimax = MiniMax.new(game_board, 'o', check_winner)
-      minimax.switch_turn
-      expect(minimax.minimax_alpha_beta(board)).to eq(-99)
-    end
-  end
-
   describe '#best_move' do
     it 'returns the location for a winning move for x' do
       board = %w(- o x

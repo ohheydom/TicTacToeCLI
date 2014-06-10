@@ -63,7 +63,7 @@ class TicTacToe
   def defaults
     { game_board: GameBoard.new,
       check_winner: CheckWinner,
-      computer_algorithm: MiniMax,
+      computer_algorithm: AlphaBetaMinimax,
       interface: CommandLineInterface.new(self) }
   end
 end
