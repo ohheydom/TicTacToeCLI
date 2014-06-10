@@ -1,4 +1,4 @@
-class MiniMax
+class Minimax
   attr_reader :check_winner, :computer_player
   attr_accessor :current_turn, :board
   O = 'o'

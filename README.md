@@ -24,7 +24,7 @@ The game will ask for your move. Simply enter the number that corresponds to the
 
 ## Algorithms
 
-The computer can utilize two algorithms to select a move. The default is MiniMax, the other is called the ElseMethod. In order to pass in a different algorithm, edit the play.rb file like so:
+The computer can utilize a few algorithms to select a move. The default is AlphaBetaMinimax, the others are called Minimax, Negamax, and ElseMethod. In order to pass in a different algorithm, edit the play.rb file like so:
 
 ```
 TicTacToe.new(computer_algorithm: ElseMethod).play
