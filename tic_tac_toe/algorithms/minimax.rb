@@ -22,10 +22,13 @@ class Minimax
   end
 
   def minimax(board, depth = 0)
+    @result ||= {}
     switch_turn
+
+    return @result[board] if @result[board]
     return score(depth) if game_over?
 
-    best_score = xturn(-Float::INFINITY, Float::INFINITY)
+    best_score ||= xturn(-Float::INFINITY, Float::INFINITY)
 
     remaining_indices.each do |move|
       new_board = new_move(move)
@@ -33,6 +36,7 @@ class Minimax
       undo_move(move)
       switch_turn
       best_score = score if [score, best_score].send(xturn(:max, :min)) == score
+      @result[new_board] = best_score
     end
     best_score
   end

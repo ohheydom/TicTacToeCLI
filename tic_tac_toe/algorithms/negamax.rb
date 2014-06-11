@@ -14,9 +14,7 @@ class Negamax
 
   def negamax(board, depth = 0, color = 1)
     switch_turn
-    if game_over? 
-      return score(depth) * color
-    end
+    return score(depth) * color if game_over?
     best_score = -Float::INFINITY
     remaining_indices.each do |move|
       new_board = new_move(move)
