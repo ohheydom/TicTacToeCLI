@@ -1,6 +1,5 @@
 class GameBoard
-  attr_accessor :board
-  attr_reader :size
+  attr_accessor :board, :size
 
   def initialize(size = 3)
     @size = size
@@ -26,6 +25,11 @@ class GameBoard
 
   def new_board
     create_board(size)
+  end
+
+  def change_board_size(size)
+    @size = size
+    @board = new_board
   end
 
   private

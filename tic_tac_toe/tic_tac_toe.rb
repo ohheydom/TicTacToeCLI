@@ -20,6 +20,10 @@ class TicTacToe
     game_board.board
   end
 
+  def change_board_size(size)
+    game_board.change_board_size(size)
+  end
+
   def clear
     game_board.board = game_board.new_board
     @current_turn = X

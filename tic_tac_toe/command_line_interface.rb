@@ -10,6 +10,7 @@ class CommandLineInterface
 
   def play
     start_message
+    grid_size_message
     loop_through_moves
     check_win_message
     play_again_message
@@ -77,6 +78,12 @@ class CommandLineInterface
 
   def start_message
     puts "\nLet's get started!\n\n"
+  end
+
+  def grid_size_message
+    print 'What size board would you like to play on? Enter only one dimension (ie 2, 3, 4): '
+    answer = gets.chomp.to_i
+    game.change_board_size(answer)
     display_board(game.board)
   end
 end
