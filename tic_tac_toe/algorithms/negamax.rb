@@ -13,8 +13,11 @@ class Negamax
   end
 
   def negamax(board, depth = 0, color = 1)
+    @result ||= {}
     switch_turn
+    return @result[board] if @result[board]
     return score(depth) * color if game_over?
+
     best_score = -Float::INFINITY
     remaining_indices.each do |move|
       new_board = new_move(move)
@@ -22,6 +25,7 @@ class Negamax
       undo_move(move)
       switch_turn
       best_score = [best_score, score].max
+      @result[new_board] = xturn(best_score, -best_score)
     end
     xturn(best_score, -best_score)
   end
