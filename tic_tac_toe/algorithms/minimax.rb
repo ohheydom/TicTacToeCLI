@@ -22,8 +22,8 @@ class Minimax
   end
 
   def minimax(board, depth = 0)
-    @result ||= {}
     switch_turn
+    @result ||= {}
 
     return @result[board] if @result[board]
     return score(depth) if game_over?
