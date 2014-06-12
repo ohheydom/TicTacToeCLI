@@ -17,7 +17,7 @@ class AlphaBetaMinimax
     return score(depth) if game_over?
 
     remaining_indices.each do |move|
-      new_board = new_move(move).dup
+      new_board = new_move(move)
       score = alpha_beta_minimax(new_board, depth + 1, alpha, beta)
       undo_move(move)
       switch_turn
