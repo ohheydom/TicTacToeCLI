@@ -22,7 +22,7 @@ class Minimax
     @result ||= {}
 
     return @result[board] if @result[board]
-    score ||= score(depth)
+    score = score(depth)
     return score if score
 
     best_score ||= xturn(-Float::INFINITY, Float::INFINITY)

@@ -15,7 +15,8 @@ class AlphaBetaMinimax
 
   def alpha_beta_minimax(board, depth = 0, alpha = -Float::INFINITY, beta = Float::INFINITY)
     switch_turn
-    return score(depth) if game_over?
+    score = score(depth)
+    return score if score
 
     remaining_indices.each do |move|
       new_board = new_move(move)

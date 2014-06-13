@@ -18,7 +18,8 @@ class Negamax
     @result ||= {}
 
     return @result[board] if @result[board]
-    return score(depth) * color if game_over?
+    score = score(depth)
+    return score * color if score
 
     best_score = -Float::INFINITY
     remaining_indices.each do |move|

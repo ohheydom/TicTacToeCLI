@@ -9,12 +9,6 @@ module AlgorithmMethods
     @dup[location] = '-'
   end
 
-  def game_over?
-    check_winner.new(@dup, human_player).win? ||
-    check_winner.new(@dup, computer_player).win? ||
-    remaining_indices.empty?
-  end
-
   def human_player
     computer_player == O ? X : O
   end
