@@ -39,9 +39,9 @@ class CommandLineInterface
 
   def display_board(board)
     dimension = Math.sqrt(board.size)
-    puts "\n   #{"-" * dimension * 2}-  "
-    board.each_slice(dimension) { |slice| p " | #{slice.join(" ")} | " }
-    puts "   #{"-" * dimension * 2}-  "
+    puts "\n   #{'-' * dimension * 2}-  "
+    board.each_slice(dimension) { |slice| p " | #{slice.join(' ')} | " }
+    puts "   #{'-' * dimension * 2}-  "
   end
 
   def display_turn(turn)

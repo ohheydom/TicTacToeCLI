@@ -31,11 +31,10 @@ class ElseMethod
 
   def play_fork(player)
     fork_pos = fork_position(player)
-    if fork_pos
-      move = game_board.move(fork_pos, turn) ? fork_pos : nil
-      rollback_board
-      move
-    end
+    return nil unless fork_pos
+    move = game_board.move(fork_pos, turn) ? fork_pos : nil
+    rollback_board
+    move
   end
 
   def play_to_win
@@ -65,13 +64,13 @@ class ElseMethod
   end
 
   def play_corner
-    move = CORNERS.select { |ind| game_board.move(ind, turn) }.first
+    move = CORNERS.find { |ind| game_board.move(ind, turn) }
     rollback_board
     move
   end
 
   def play_side
-    move = SIDES.select { |ind| game_board.move(ind, turn) }.first
+    move = SIDES.find { |ind| game_board.move(ind, turn) }
     rollback_board
     move
   end
