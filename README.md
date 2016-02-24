@@ -1,10 +1,10 @@
-#Tic Tac Toe
+# Tic Tac Toe
 
 I built this as a test project for an apprenticeship.
 
 This was built in Ruby and utilizes a command line interface.
 
-##Instructions
+## Instructions
 
 To start, type the following into the command prompt.
 
@@ -26,6 +26,6 @@ The game will ask for your move. Simply enter the number that corresponds to the
 
 The computer can utilize a few algorithms to select a move. The default is AlphaBetaMinimax, the others are called Minimax, Negamax, and ElseMethod. In order to pass in a different algorithm, edit the play.rb file like so:
 
-```
+```ruby
 TicTacToe.new(computer_algorithm: ElseMethod).play
 ```
