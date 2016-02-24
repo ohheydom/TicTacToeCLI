@@ -31,7 +31,7 @@ class AlphaBetaMinimax
   end
 
   def best_move
-    minimax_moves.send(xturn(:max_by, :min_by)) { |score, move| score }[1]
+    minimax_moves.send(xturn(:max_by, :min_by)) { |score, _move| score }[1]
   end
 
   def minimax_moves

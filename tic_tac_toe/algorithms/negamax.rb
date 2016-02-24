@@ -34,7 +34,7 @@ class Negamax
   end
 
   def best_move
-    negamax_moves.send(xturn(:max_by, :min_by)) { |score, move| score }[1]
+    negamax_moves.send(xturn(:max_by, :min_by)) { |score, _move| score }[1]
   end
 
   def negamax_moves

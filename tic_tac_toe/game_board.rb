@@ -7,12 +7,9 @@ class GameBoard
   end
 
   def move(location, turn)
-    if board[location] == '-'
-      board[location] = turn
-      location
-    else
-      nil
-    end
+    return nil unless board[location] == '-'
+    board[location] = turn
+    location
   end
 
   def remaining_indices
